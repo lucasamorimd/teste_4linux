@@ -9,6 +9,7 @@ return array(
             'consultores' => 'Api\Controller\ConsultoresController',
             'servicos' => 'Api\Controller\ServicosController',
             'agendamento' => 'Api\Controller\AgendamentoController',
+            'relservconsult' => 'Api\Controller\RelServicoConsultorController'
         )
     ),
     'view_manager' => array(
@@ -21,10 +22,11 @@ return array(
             'restful' => array(
                 'type'    => 'Segment',
                 'options' => array(
-                    'route'       => '/api/:controller[/:id]',
+                    'route'       => '/api/:controller[/:id][.:column]',
                     'constraints' => array(
                         'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id'         => '[a-zA-Z0-9_-]*',
+                        'column' => '[a-zA-Z][a-zA-Z0-9_-]*',
                     ),
                 ),
             ),

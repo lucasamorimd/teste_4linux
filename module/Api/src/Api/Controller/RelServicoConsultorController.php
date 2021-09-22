@@ -5,26 +5,13 @@ namespace Api\Controller;
 use Zend\Mvc\Controller\AbstractRestfulController;
 use Zend\View\Model\JsonModel;
 
-class ServicosController extends AbstractRestfulController
+class RelServicoConsultorController extends AbstractRestfulController
 {
     public $array = [
         'error' => '',
         'result' => ''
     ];
     protected $ServicosTable;
-    public function getList()
-    {
-        $fetchservicos = $this->getTable('Application\Model\ServicosTable')->fetchAll();
-        foreach ($fetchservicos as $a) {
-            $servicos[] = $a;
-        }
-        if (count($servicos) > 0) {
-            $this->array['result'] = array('servicos' => $servicos);
-        } else {
-            $this->array['error'] = array('msg' => 'Nenhum serviço registrado');
-        }
-        return new JsonModel($this->array);
-    }
 
     public function get($id)
     {
@@ -54,7 +41,7 @@ class ServicosController extends AbstractRestfulController
     }
     private function getCallParamenters()
     {
-        $table = $this->getEvent()->getRouteMatch()->getParam('column');
-        return $table;
+        $column = $this->getEvent()->getRouteMatch()->getParam('column');
+        return $column;
     }
 }

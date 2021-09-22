@@ -3,6 +3,7 @@
 namespace Api\Controller;
 
 use Zend\Mvc\Controller\AbstractRestfulController;
+use Zend\Mvc\MvcEvent;
 use Zend\View\Model\JsonModel;
 use Application\Model\Agendamento;
 
@@ -15,6 +16,8 @@ class AgendamentoController extends AbstractRestfulController
     ];
 
     protected $AgendamentoTable;
+
+
     public function getList()
     {
         $fetchagendamentos = $this->getTable('Application\Model\AgendamentoTable')->fetchAll();
@@ -34,7 +37,16 @@ class AgendamentoController extends AbstractRestfulController
     }
     public function get($id)
     {
-        $getAgendamento = $this->getTable('Application\Model\AgendamentoTable')->get($id, 'id');
+
+        //VERIFICA SE HÁ ALGUM PARAMETRO ALÉM DO ID PASSADO
+        //CASO HAJA, ESSE PARAMETRÔ É UMA COLUNA ESPECÍFICA DA TABELA DO BANCO
+        if ($this->getCallParamenters() !== null) {
+            $column = $this->getCallParamenters();
+        } else {
+            $column = 'id';
+        }
+
+        $getAgendamento = $this->getTable('Application\Model\AgendamentoTable')->get($id, $column);
 
         if (count($getAgendamento) > 0) {
             $this->array['result'] = array('agendamento' => $getAgendamento);
@@ -77,12 +89,18 @@ class AgendamentoController extends AbstractRestfulController
         return $resposta;
     }
 
-    public function getTable($namespace)
+    private function getTable($namespace)
     {
         if (!$this->AgendamentoTable) {
             $sm = $this->getServiceLocator();
             $this->AgendamentoTable = $sm->get($namespace);
         }
         return $this->AgendamentoTable;
+    }
+
+    private function getCallParamenters()
+    {
+        $table = $this->getEvent()->getRouteMatch()->getParam('column');
+        return $table;
     }
 }

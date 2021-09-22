@@ -23,14 +23,11 @@ class ServicosTable
         return  $this->tableGateway->select();
     }
 
-    public function get($id)
+    public function get($id, $colmumn)
     {
         $id  = (int) $id;
-        $rowset = $this->tableGateway->select(array('id' => $id));
+        $rowset = $this->tableGateway->select(array($colmumn => $id));
         $row = $rowset->current();
-        if (!$row) {
-            throw new \Exception("Could not find row $id");
-        }
         return $row;
     }
 }

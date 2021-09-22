@@ -33,7 +33,14 @@ class ConsultoresController extends AbstractRestfulController
 
     public function get($id)
     {
-        $getConsultor = $this->getTable('Application\Model\ConsultoresTable')->get($id);
+
+        if ($this->getCallParamenters() !== null) {
+            $column = $this->getCallParamenters();
+        } else {
+            $column = 'id';
+        }
+
+        $getConsultor = $this->getTable('Application\Model\ConsultoresTable')->get($id, $column);
 
         if (count($getConsultor) > 0) {
             $this->array['result'] = array('Consultores' => $getConsultor);
@@ -44,12 +51,17 @@ class ConsultoresController extends AbstractRestfulController
         return $resposta;
     }
 
-    public function getTable($namespace)
+    private function getTable($namespace)
     {
         if (!$this->ConsultoresTable) {
             $sm = $this->getServiceLocator();
             $this->ConsultoresTable = $sm->get($namespace);
         }
         return $this->ConsultoresTable;
+    }
+    private function getCallParamenters()
+    {
+        $table = $this->getEvent()->getRouteMatch()->getParam('column');
+        return $table;
     }
 }
