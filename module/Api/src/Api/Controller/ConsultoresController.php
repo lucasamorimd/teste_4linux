@@ -23,9 +23,9 @@ class ConsultoresController extends AbstractRestfulController
         }
 
         if (count($consultores) > 0) {
-            $this->array['result'] = array('consultores' => $consultores);
+            $this->array['result'] =  $consultores;
         } else {
-            $this->array['error'] = array('msg' => 'Não há consultores cadastrados');
+            $this->array['error'] = 'Não há consultores cadastrados';
         }
         $resposta = new JsonModel($this->array);
         return $resposta;
@@ -43,9 +43,9 @@ class ConsultoresController extends AbstractRestfulController
         $getConsultor = $this->getTable('Application\Model\ConsultoresTable')->get($id, $column);
 
         if (count($getConsultor) > 0) {
-            $this->array['result'] = array('Consultores' => $getConsultor);
+            $this->array['result'] = $getConsultor;
         } else {
-            $this->array['error'] = array('msg' => 'Nenhum item encontrado');
+            $this->array['error'] =  'Nenhum item encontrado';
         }
         $resposta = new JsonModel($this->array);
         return $resposta;

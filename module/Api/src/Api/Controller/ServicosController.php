@@ -12,6 +12,7 @@ class ServicosController extends AbstractRestfulController
         'result' => ''
     ];
     protected $ServicosTable;
+
     public function getList()
     {
         $fetchservicos = $this->getTable('Application\Model\ServicosTable')->fetchAll();
@@ -19,9 +20,9 @@ class ServicosController extends AbstractRestfulController
             $servicos[] = $a;
         }
         if (count($servicos) > 0) {
-            $this->array['result'] = array('servicos' => $servicos);
+            $this->array['result'] =  $servicos;
         } else {
-            $this->array['error'] = array('msg' => 'Nenhum serviço registrado');
+            $this->array['error'] = 'Nenhum serviço registrado';
         }
         return new JsonModel($this->array);
     }
@@ -37,9 +38,9 @@ class ServicosController extends AbstractRestfulController
 
         $getServico = $this->getTable('Application\Model\ServicosTable')->get($id, $column);
         if (count($getServico) > 0) {
-            $this->array['result'] = array('servico' => $getServico);
+            $this->array['result'] = $getServico;
         } else {
-            $this->array['error'] = array('msg' => 'Nenhum serviço encontrado');
+            $this->array['error'] = 'Nenhum serviço encontrado';
         }
         return new JsonModel($this->array);
     }

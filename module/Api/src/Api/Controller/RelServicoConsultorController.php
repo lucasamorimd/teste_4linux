@@ -18,15 +18,12 @@ class RelServicoConsultorController extends AbstractRestfulController
 
         if ($this->getCallParamenters() !== null) {
             $column = $this->getCallParamenters();
-        } else {
-            $column = 'id';
         }
-
         $getServico = $this->getTable('Application\Model\ServicosTable')->get($id, $column);
         if (count($getServico) > 0) {
-            $this->array['result'] = array('servico' => $getServico);
+            $this->array['result'] = $getServico;
         } else {
-            $this->array['error'] = array('msg' => 'Nenhum serviço encontrado');
+            $this->array['error'] = 'Nenhum ' . $column . ' encontrado';
         }
         return new JsonModel($this->array);
     }

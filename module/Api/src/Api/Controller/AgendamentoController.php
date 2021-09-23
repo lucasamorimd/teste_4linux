@@ -16,21 +16,27 @@ class AgendamentoController extends AbstractRestfulController
     ];
 
     protected $AgendamentoTable;
-
+    protected $otherTable;
 
     public function getList()
     {
         $fetchagendamentos = $this->getTable('Application\Model\AgendamentoTable')->fetchAll();
 
-        foreach ($fetchagendamentos as $a) {
-            $agendamentos[] = $a;
-        }
-        if (count($agendamentos) > 0) {
-
-            $this->array['result'] =  array('agendamentos' => $agendamentos);
+        if (count($fetchagendamentos) > 0) {
+            foreach ($fetchagendamentos as $key => $a) {
+                $getConsultor = $this->getOtherTable('Application\Model\ConsultoresTable')->get($a['consultor'], 'id');
+                $this->otherTable = null;
+                $getServico = $this->getOtherTable('Application\Model\ServicosTable')->get($a['servico'], 'id');
+                $this->otherTable = null;
+                $a['consultor'] = $getConsultor;
+                $a['servico'] = $getServico;
+                $a['data'] = date('d/m/Y', strtotime($a['data']));
+                $agendamentos[$key] = $a;
+            }
+            $this->array['result'] =  $agendamentos;
         } else {
 
-            $this->array['error'] = array('msg' => 'Nenhum dado encontrado');
+            $this->array['error'] = 'Nenhum dado encontrado';
         }
         $resposta = new JsonModel($this->array);
         return $resposta;
@@ -48,10 +54,17 @@ class AgendamentoController extends AbstractRestfulController
 
         $getAgendamento = $this->getTable('Application\Model\AgendamentoTable')->get($id, $column);
 
+
         if (count($getAgendamento) > 0) {
-            $this->array['result'] = array('agendamento' => $getAgendamento);
+            $getConsultor = $this->getOtherTable('Application\Model\ConsultoresTable')->get($getAgendamento['id'], 'id');
+            $this->otherTable = null;
+            $getServico = $this->getOtherTable('Application\Model\ServicosTable')->get($getAgendamento['servico'], 'id');
+            $this->otherTable = null;
+            $getAgendamento['consultor'] = $getConsultor;
+            $getAgendamento['servico'] = $getServico;
+            $this->array['result'] =  $getAgendamento;
         } else {
-            $this->array['error'] = array('msg' => 'Nenhum agendamento encontrado');
+            $this->array['error'] =  'Nenhum agendamento encontrado';
         }
         $resposta = new JsonModel($this->array);
         return $resposta;
@@ -77,9 +90,9 @@ class AgendamentoController extends AbstractRestfulController
         if (count($agendamentos) == 0) {
             $save = $this->getTable('Application\Model\AgendamentoTable')->save($entity);
             if ($save) {
-                $this->array['result'] = array('novo_agendamento' => $save);
+                $this->array['result'] = $save;
             } else {
-                $this->array['error'] = array('msg' => 'Não foi possível salvar');
+                $this->array['error'] =  'Não foi possível salvar';
             }
             $resposta = new JsonModel($this->array);
             return $resposta;
@@ -96,6 +109,14 @@ class AgendamentoController extends AbstractRestfulController
             $this->AgendamentoTable = $sm->get($namespace);
         }
         return $this->AgendamentoTable;
+    }
+    private function getOtherTable($namespace)
+    {
+        if (!$this->otherTable) {
+            $sm = $this->getServiceLocator();
+            $this->otherTable = $sm->get($namespace);
+        }
+        return $this->otherTable;
     }
 
     private function getCallParamenters()
