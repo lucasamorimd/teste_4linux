@@ -9,7 +9,7 @@ class ServicosController extends AbstractRestfulController
 {
     public $array = [
         'error' => '',
-        'result' => ''
+        'result' => []
     ];
     protected $ServicosTable;
 

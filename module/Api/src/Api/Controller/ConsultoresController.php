@@ -10,7 +10,7 @@ class ConsultoresController extends AbstractRestfulController
 
     public $array = [
         'error' => '',
-        'result' => ''
+        'result' => []
     ];
     protected $ConsultoresTable;
 

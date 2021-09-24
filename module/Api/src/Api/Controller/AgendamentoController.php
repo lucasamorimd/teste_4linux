@@ -12,7 +12,7 @@ class AgendamentoController extends AbstractRestfulController
 
     public $array = [
         'error' => '',
-        'result' => ''
+        'result' => []
     ];
 
     protected $AgendamentoTable;
@@ -30,7 +30,6 @@ class AgendamentoController extends AbstractRestfulController
                 $this->otherTable = null;
                 $a['consultor'] = $getConsultor;
                 $a['servico'] = $getServico;
-                $a['data'] = date('d/m/Y', strtotime($a['data']));
                 $agendamentos[$key] = $a;
             }
             $this->array['result'] =  $agendamentos;
@@ -62,7 +61,7 @@ class AgendamentoController extends AbstractRestfulController
             $this->otherTable = null;
             $getAgendamento['consultor'] = $getConsultor;
             $getAgendamento['servico'] = $getServico;
-            $this->array['result'] =  $getAgendamento;
+            $this->array['result'] =  [$getAgendamento];
         } else {
             $this->array['error'] =  'Nenhum agendamento encontrado';
         }

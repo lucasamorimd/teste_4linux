@@ -9,21 +9,22 @@ class RelServicoConsultorController extends AbstractRestfulController
 {
     public $array = [
         'error' => '',
-        'result' => ''
+        'result' => []
     ];
     protected $ServicosTable;
 
     public function get($id)
     {
 
-        if ($this->getCallParamenters() !== null) {
-            $column = $this->getCallParamenters();
-        }
-        $getServico = $this->getTable('Application\Model\ServicosTable')->get($id, $column);
-        if (count($getServico) > 0) {
-            $this->array['result'] = $getServico;
+        $getIdServico = $this->getTable('Application\Model\RelServicoConsultorTable')->get($id, 'id_consultor');
+        $this->ServicosTable = null;
+        if (count($getIdServico) > 0) {
+            foreach ($getIdServico as $id_servico) {
+                $getServicos[] = $this->getTable('Application\Model\ServicosTable')->get($id_servico, 'id');
+            }
+            $this->array['result'] = $getServicos;
         } else {
-            $this->array['error'] = 'Nenhum ' . $column . ' encontrado';
+            $this->array['error'] = 'Nada encontrado';
         }
         return new JsonModel($this->array);
     }

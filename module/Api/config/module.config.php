@@ -9,7 +9,7 @@ return array(
             'consultores' => 'Api\Controller\ConsultoresController',
             'servicos' => 'Api\Controller\ServicosController',
             'agendamento' => 'Api\Controller\AgendamentoController',
-            'relservconsult' => 'Api\Controller\RelServicoConsultorController'
+            'servicos-consultor' => 'Api\Controller\RelServicoConsultorController'
         )
     ),
     'view_manager' => array(
