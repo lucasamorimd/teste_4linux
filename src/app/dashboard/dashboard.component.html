@@ -1,0 +1,54 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-plain">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title mt-0"> Agendamentos</h4>
+                        <p class="card-category">Lista de agendamentos registrados</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover"
+                                *ngIf="agendamentos$ | async as agendamentos; else loading">
+                                <thead class="">
+                                    <th>
+                                        ID
+                                    </th>
+                                    <th>
+                                        Data
+                                    </th>
+                                    <th>
+                                        Consultor
+                                    </th>
+                                    <th>
+                                        Serviço
+                                    </th>
+                                    <th>
+                                        Email do Cliente
+                                    </th>
+                                </thead>
+                                <tbody *ngIf="agendamentos.result; else error">
+                                    <tr *ngFor="let agendamento of agendamentos.result">
+                                        <td>{{agendamento.id}}</td>
+                                        <td>{{agendamento.data | date : 'dd/MM/yyyy' }}</td>
+                                        <td>{{agendamento.consultor.nome}}</td>
+                                        <td>{{agendamento.servico.descricao}}</td>
+                                        <td>{{agendamento.email_cliente}}</td>
+                                    </tr>
+                                    {{agendamentos.error}}
+                                </tbody>
+                                <ng-template #error>
+                                    <span>({{agendamentos.error}})</span>
+                                </ng-template>
+                            </table>
+                            <ng-template #loading>
+                                <span>Carregando lista</span>
+                            </ng-template>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
