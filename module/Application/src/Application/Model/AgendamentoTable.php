@@ -38,7 +38,7 @@ class AgendamentoTable
             $this->tableGateway->insert($data);
             $item->id = $this->tableGateway->getLastInsertValue();
         } else {
-            if ($this->get($id)) {
+            if ($this->get($id, 'id')) {
                 $this->tableGateway->update($data, array('id' => $id));
             } else {
                 throw new \Exception('Id does not exist');
@@ -48,7 +48,7 @@ class AgendamentoTable
     }
     public function get($id, $colmumn)
     {
-        $id  = (int) $id;
+        $id  =  $id;
         $rowset = $this->tableGateway->select(array($colmumn => $id));
         $row = $rowset->current();
         return $row;

@@ -25,7 +25,7 @@ class ServicosTable
 
     public function get($id, $colmumn)
     {
-        $id  = (int) $id;
+        $id  =  $id;
         $rowset = $this->tableGateway->select(array($colmumn => $id));
         $row = $rowset->current();
         return $row;

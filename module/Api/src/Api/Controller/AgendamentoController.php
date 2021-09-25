@@ -35,7 +35,7 @@ class AgendamentoController extends AbstractRestfulController
             $this->array['result'] =  $agendamentos;
         } else {
 
-            $this->array['error'] = 'Nenhum dado encontrado';
+            $this->array['error'] = 'Nenhum agendamento encontrado';
         }
         $resposta = new JsonModel($this->array);
         return $resposta;
@@ -52,8 +52,6 @@ class AgendamentoController extends AbstractRestfulController
         }
 
         $getAgendamento = $this->getTable('Application\Model\AgendamentoTable')->get($id, $column);
-
-
         if (count($getAgendamento) > 0) {
             $getConsultor = $this->getOtherTable('Application\Model\ConsultoresTable')->get($getAgendamento['id'], 'id');
             $this->otherTable = null;
