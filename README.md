@@ -8,7 +8,7 @@
 - Basta acessar e criar o banco de dados
 - Dump do banco de dados contido no diretório teste_api/data/4linux.sql
 - No diretório teste_api/config/autoload/local.php inserir o user_name como 'root'
-- entrar no diretório vendor/zendframework/zend-mvc/Controller/AbstractController.php
+- entrar no diretório vendor/zendframework/zend-mvc/src/Controller/AbstractController.php
 - Apagar o trigger_error (linha 251 até a linha 258)
 - para testar abrir http://localhost:8081/api/agendamento
 - deverá retornar um json (provavelmente com a mensagem "Nenhum agendamento encontrado")
