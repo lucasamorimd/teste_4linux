@@ -1,10 +1,10 @@
 ## API-TESTE 4LINUX
 
 **Instruções para rodar a aplicação**
-**Comandos**
+## Comandos
 - docker-compose up -d --build
 - docker-compose run zf composer install
-**Configurações**
+## Configurações
 - Na imagem da api já sobe um banco de dados mysql
 - Basta acessar o banco de dados e colar o dump do banco.
 - Dump do banco de dados contido no diretório teste_api/data/4linux.sql
