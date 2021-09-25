@@ -22,6 +22,9 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { DatepickerComponent } from "./datepicker/datepicker.component";
 import { CommonModule } from "@angular/common";
+import { PesquisaComponent } from "./pesquisa/pesquisa.component";
+import { FiltroAgendamentoPipe } from "./pesquisa/filters/filtroagendamento";
+import { FiltroServicoPipe } from "./cadastro/filters/filtraservico";
 
 @NgModule({
   imports: [
@@ -43,6 +46,9 @@ import { CommonModule } from "@angular/common";
     AdminLayoutComponent,
     CadastroComponent,
     DatepickerComponent,
+    PesquisaComponent,
+    FiltroAgendamentoPipe,
+    FiltroServicoPipe,
   ],
   providers: [],
   bootstrap: [AppComponent],

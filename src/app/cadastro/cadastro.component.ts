@@ -1,5 +1,4 @@
-import { Location } from "@angular/common";
-import { Component, EventEmitter, OnInit } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Agendamentos } from "app/interfaces/agendamentos";
@@ -7,7 +6,6 @@ import { Consultor } from "app/interfaces/consultores";
 import { Feriados } from "app/interfaces/feriados";
 import { Servicos } from "app/interfaces/servicos";
 import { AgendamentosService } from "app/requests/agendamentos.service";
-
 import { ConsultoresService } from "app/requests/consultores.service";
 import { Observable } from "rxjs";
 
@@ -25,13 +23,13 @@ export class CadastroComponent implements OnInit {
   form: FormGroup;
   inputdata: any;
   is_submited = false;
+
   notify: string;
 
   constructor(
     private service: ConsultoresService,
     private fb: FormBuilder,
     private agendservice: AgendamentosService,
-    private location: Location,
     private router: Router
   ) {}
 
@@ -39,14 +37,8 @@ export class CadastroComponent implements OnInit {
     this.consultores$ = this.service.listConsultores();
     this.feriados$ = this.service.getFeriados();
     this.form = this.fb.group({
-      consultor: [
-        "Selecionar um Consultor",
-        [Validators.required, Validators.maxLength(250)],
-      ],
-      servico: [
-        "Selecionar um servico",
-        [Validators.required, Validators.maxLength(250)],
-      ],
+      consultor: [[Validators.required, Validators.maxLength(250)]],
+      servico: [[Validators.required, Validators.maxLength(250)]],
       data: [null],
       email_cliente: [
         null,
@@ -55,9 +47,11 @@ export class CadastroComponent implements OnInit {
     });
   }
   getConsultorServicos(value) {
-    this.id_consultor = value;
-    this.servicos$ = this.service.getServicos(value);
-    this.agendamentos$ = this.agendservice.list();
+    if (value) {
+      this.servicos$ = this.service.getServicos(value);
+      this.id_consultor = value;
+      this.agendamentos$ = this.agendservice.list();
+    }
   }
   receberData(data) {
     let date: any;
@@ -83,7 +77,6 @@ export class CadastroComponent implements OnInit {
     if (this.form.valid && this.form.value.data) {
       this.notify = "Enviando formulário";
       this.is_submited = true;
-      console.log("submit");
       this.agendservice.create(this.form.value).subscribe(
         (success) => {
           console.log(success);

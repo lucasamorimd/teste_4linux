@@ -1,0 +1,90 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title ">Simple Table</h4>
+                        <p class="card-category"> Here is a subtitle for this table</p>
+                    </div>
+                    <div class="card-body"
+                        *ngIf="listaAgends && listaConsultor  && listaServico; else carregando_tabela">
+                        <form>
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <mat-form-field>
+                                        <input #ref matInput [matDatepicker]="picker"
+                                            (dateChange)="filtro = $event.target.value; tipo= 'data'"
+                                            placeholder="Filtrar por data">
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <select id="consultor" class="form-control"
+                                        (change)="filtro = $event.target.value; tipo = 'consultor'">
+                                        <option value="{{null}}" selected>Filtrar por consultor...</option>
+                                        <option *ngFor="let consultor of listaConsultor.result"
+                                            value="{{consultor.id}}">
+                                            {{consultor.nome}}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <select id="servico" class="form-control"
+                                        (change)="filtro = $event.target.value; tipo = 'servico'">
+                                        <option value="{{null}}" selected>Filtrar por serviço...</option>
+                                        <option *ngFor="let servico of listaServico.result" value="{{servico.id}}">
+                                            {{servico.descricao}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="">
+                                    <th>
+                                        ID
+                                    </th>
+                                    <th>
+                                        Data
+                                    </th>
+                                    <th>
+                                        Consultor
+                                    </th>
+                                    <th>
+                                        Serviço
+                                    </th>
+                                    <th>
+                                        Email do Cliente
+                                    </th>
+                                </thead>
+                                <tbody *ngIf="listaAgends.result as agendamentos;else error">
+                                    <tr *ngFor="let agendamento of (agendamentos | filtroAgendamento : filtro:tipo)">
+                                        <td>{{agendamento.id}}</td>
+                                        <td>{{agendamento.data | date : 'dd/MM/yyyy' }}</td>
+                                        <td>{{agendamento.consultor.nome}}</td>
+                                        <td>{{agendamento.servico.descricao}}</td>
+                                        <td>{{agendamento.email_cliente}}</td>
+                                    </tr>
+                                    {{agendamentos.error}}
+                                </tbody>
+                                <ng-template #error>
+                                    <span>({{agendamentos.error}})</span>
+                                </ng-template>
+                            </table>
+                        </div>
+                    </div>
+                    <ng-template #carregando_tabela>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <span>Tabela sendo carregada, aguarde...</span>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
