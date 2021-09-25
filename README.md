@@ -5,7 +5,7 @@
 - docker-compose up -d --build
 - docker-compose run zf composer install
 - Na imagem da api já sobe um banco de dados mysql
-- Basta acessar e criar o banco de dados
+- Basta acessar o banco de dados e colar o dump do banco.
 - Dump do banco de dados contido no diretório teste_api/data/4linux.sql
 - No diretório teste_api/config/autoload/local.php inserir o user_name como 'root'
 - entrar no diretório vendor/zendframework/zend-mvc/src/Controller/AbstractController.php
