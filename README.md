@@ -7,8 +7,8 @@
 ## Configurações
 - Na imagem da api já sobe um banco de dados mysql
 - Basta acessar o banco de dados e colar o dump do banco.
-- Dump do banco de dados contido no diretório teste_api/data/4linux.sql
-- No diretório teste_api/config/autoload/local.php inserir o user_name como 'root'
+- Dump do banco de dados contido no diretório data/4linux.sql
+- No diretório config/autoload/local.php inserir o user_name como 'root'
 - entrar no diretório vendor/zendframework/zend-mvc/src/Controller/AbstractController.php
 - Apagar o trigger_error (linha 251 até a linha 258)
 - para testar abrir http://localhost:8081/api/agendamento
