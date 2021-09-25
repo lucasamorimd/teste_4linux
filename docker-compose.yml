@@ -1,7 +1,24 @@
-zf:
-  build: .
-  dockerfile: Dockerfile
-  ports:
-   - "8081:80"
-  volumes:
-   - .:/var/www
+version: "3"
+
+services:
+  zf:
+    build: .
+    restart: always
+    ports:
+      - "8081:80"
+    volumes:
+      - .:/var/www
+  db:
+    image: mysql:5.7
+    restart: always
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_DATABASE: api4linux
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - default
+volumes:
+  db_data:

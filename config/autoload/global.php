@@ -15,7 +15,7 @@
 return array(
     'db' => array(
         'driver'         => 'Pdo',
-        'dsn'            => 'mysql:dbname=api4linux;host=172.17.0.3; port=3306;',
+        'dsn'            => 'mysql:dbname=api4linux;host=db;',
         'driver_options' => array(
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_EMULATE_PREPARES => true

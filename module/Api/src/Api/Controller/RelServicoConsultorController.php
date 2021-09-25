@@ -16,15 +16,23 @@ class RelServicoConsultorController extends AbstractRestfulController
     public function get($id)
     {
 
-        $getIdServico = $this->getTable('Application\Model\RelServicoConsultorTable')->get($id, 'id_consultor');
+        $getIdServico = $this->getTable('Application\Model\RelServicoConsultorTable')->fetchAll();
         $this->ServicosTable = null;
-        if (count($getIdServico) > 0) {
-            foreach ($getIdServico as $id_servico) {
-                $getServicos[] = $this->getTable('Application\Model\ServicosTable')->get($id_servico, 'id');
+        $getConsultor = $this->getTable('Application\Model\ConsultoresTable')->get($id, 'id');
+        $this->ServicosTable = null;
+        if (count($getConsultor) > 0) {
+            if (count($getIdServico) > 0) {
+                foreach ($getIdServico as $id_servico) {
+                    if ($id_servico['id_consultor'] == $id) {
+                        $getServicos[] = $this->getTable('Application\Model\ServicosTable')->get($id_servico['id_servico'], 'id');
+                    }
+                }
+                $this->array['result'] = $getServicos;
+            } else {
+                $this->array['error'] = 'Nada encontrado';
             }
-            $this->array['result'] = $getServicos;
         } else {
-            $this->array['error'] = 'Nada encontrado';
+            $this->array['error'] = 'Não há nenhum consultor cadastrado';
         }
         return new JsonModel($this->array);
     }

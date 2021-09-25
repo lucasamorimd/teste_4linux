@@ -1,4 +1,5 @@
 CREATE DATABASE if not exists `api4linux`;
+USE `api4linux`;
 ALTER DATABASE `api4linux` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 CREATE TABLE if not exists `consultores`(
     `id` int(100) not null auto_increment,
