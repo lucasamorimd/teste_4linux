@@ -10,6 +10,8 @@
 - No diretório teste_api/config/autoload/local.php inserir o user_name como 'root'
 - para testar abrir http://localhost:8081/api/agendamento
 - deverá retornar um json (provavelmente com a mensagem "Nenhum agendamento encontrado")
+- entrar no diretório vendor/zendframework/zend-mvc/Controller/AbstractController.php
+- Apagar o trigger_error (linha 251 até a linha 258)
 
 ## endpoints
 **Lista de todos os agendamentos**
