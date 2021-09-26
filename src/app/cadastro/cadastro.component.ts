@@ -8,6 +8,8 @@ import { Servicos } from "app/interfaces/servicos";
 import { AgendamentosService } from "app/requests/agendamentos.service";
 import { ConsultoresService } from "app/requests/consultores.service";
 import { Observable } from "rxjs";
+import * as $ from "jquery";
+import "bootstrap-notify";
 
 @Component({
   selector: "app-cadastro",
@@ -23,6 +25,8 @@ export class CadastroComponent implements OnInit {
   form: FormGroup;
   inputdata: any;
   is_submited = false;
+
+  carregando_servicos: boolean = false;
 
   notify: string;
 
@@ -48,6 +52,7 @@ export class CadastroComponent implements OnInit {
   }
   getConsultorServicos(value) {
     if (value) {
+      this.carregando_servicos = true;
       this.servicos$ = this.service.getServicos(value);
       this.id_consultor = value;
       this.agendamentos$ = this.agendservice.list();
@@ -79,12 +84,36 @@ export class CadastroComponent implements OnInit {
       this.is_submited = true;
       this.agendservice.create(this.form.value).subscribe(
         (success) => {
-          console.log(success);
-          this.notify = "Agendamento cadastrado!";
+          this.notificar({
+            icon: "check",
+            message: "Agendamento registrado!",
+            type: "success",
+          });
         },
-        (error) => (this.notify = `${error.error}`),
+        (error) =>
+          this.notificar({
+            icon: "priority_high",
+            message: "Houve alguma falha ao registrar agendamento",
+            type: "danger",
+          }),
         () => this.router.navigate(["/", "dashboard"])
       );
     }
+  }
+  notificar(params: any) {
+    $[`notify`](
+      {
+        icon: params.icon,
+        message: params.message,
+      },
+      {
+        type: params.type,
+        timer: 5000,
+        placement: {
+          from: "top",
+          align: "right",
+        },
+      }
+    );
   }
 }

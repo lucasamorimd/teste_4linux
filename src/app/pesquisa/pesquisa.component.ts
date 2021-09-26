@@ -31,7 +31,7 @@ export class PesquisaComponent implements OnInit {
 
   ngOnInit() {
     this.service
-      .listAgendamentos(this._url)
+      .listaAgendamentos(this._url)
       .subscribe((dados) => (this.listaAgends = dados));
 
     this.service

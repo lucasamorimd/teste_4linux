@@ -11,7 +11,7 @@ import { Observable } from "rxjs";
 })
 export class PesquisasService {
   constructor(private http: HttpClient) {}
-  listAgendamentos(dominio: string) {
+  listaAgendamentos(dominio: string) {
     let url = `${encodeURI(dominio)}/api/agendamento`;
     return this.http.get<Agendamentos[]>(url).pipe(tap(console.log));
   }

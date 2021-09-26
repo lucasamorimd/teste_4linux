@@ -7,7 +7,7 @@
                 </h1>
             </div>
             <div class="col-md-12">
-                <div class="card card-plain">
+                <div class="card">
                     <div class="card-header card-header-danger">
                         <h4 class="card-title mt-0"> Cadastrar</h4>
                         <p class="card-category">Formulário de cadastro de novo agendamento</p>
@@ -19,7 +19,7 @@
                                     *ngIf="consultores$ | async as consultores; else carregando_consultores">
                                     <label for="consultor">Consultor</label>
                                     <select class="form-control selectpicker" data-style="btn btn-link" id="consultor"
-                                        (change)="getConsultorServicos($event.target.value) "
+                                        (change)="getConsultorServicos($event.target.value); carregando_servicos = true"
                                         formControlName="consultor">
                                         <option *ngFor="let consultor of consultores.result" value="{{consultor.id}}">
                                             {{consultor.nome}}</option>
@@ -31,7 +31,7 @@
                                     </div>
                                 </ng-template>
                                 <div class="form-group col-md-6"
-                                    *ngIf="servicos$ | async as servicos; else carregando_servico">
+                                    *ngIf="servicos$ | async as servicos; else loading_servicos">
                                     <label for="servico">Serviço</label>
                                     <select class="form-control selectpicker" data-style="btn btn-link" id="servico"
                                         formControlName="servico">
@@ -40,9 +40,11 @@
                                         </option>
                                     </select>
                                 </div>
-                                <ng-template #carregando_servico>
+                                <ng-template #loading_servicos>
                                     <div class="form-group col-md-6">
-                                        <label>Carregando serviços</label>
+                                        <label>{{ carregando_servicos ? 'Carregando serviços' : 'Selecione um consultor
+                                            para
+                                            carregar os serviços'}}</label>
                                     </div>
                                 </ng-template>
                             </div>
@@ -57,7 +59,7 @@
                                 <input type="email" class="form-control" id="email-cliente"
                                     placeholder="name@example.com" formControlName="email_cliente">
                             </div>
-                            <div class="form-group align-center">
+                            <div class="form-group align-center" *ngIf="!is_submited">
                                 <button class="btn btn-danger" (click)="onSubmit()">Salvar</button>
                             </div>
 
