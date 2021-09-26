@@ -6,8 +6,9 @@
 - docker-compose run zf composer install
 ## Configurações
 - Na imagem da api já sobe um banco de dados mysql
-- verificar o nome do container do banco de dados (nomeprojeto_db_1)
-- docker exec -it nomedoprojeto_db_1 /bin/sh
+- verificar o nome do container do banco de dados (nomedapastaraiz_db_1)
+- docker exec -it nomedapastaraiz_db_1 /bin/sh
+- mysql -u root
 - colar o dump do banco.
 - Dump do banco de dados contido no diretório data/4linux.sql
 - No diretório config/autoload/local.php inserir o user_name como 'root'
