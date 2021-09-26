@@ -6,12 +6,14 @@
 - docker-compose run zf composer install
 ## Configurações
 - Na imagem da api já sobe um banco de dados mysql
-- Basta acessar o banco de dados e colar o dump do banco.
+- verificar o nome do container do banco de dados (nomeprojeto_db_1)
+- docker exec -it nomedoprojeto_db_1 /bin/sh
+- colar o dump do banco.
 - Dump do banco de dados contido no diretório data/4linux.sql
 - No diretório config/autoload/local.php inserir o user_name como 'root'
 - entrar no diretório vendor/zendframework/zend-mvc/src/Controller/AbstractController.php
 - Apagar o trigger_error (linha 251 até a linha 258)
-- para testar abrir http://localhost:8081/api/agendamento
+- para testar, abrir http://localhost:8081/api/agendamento
 - deverá retornar um json (provavelmente com a mensagem "Nenhum agendamento encontrado")
 
 ## endpoints
