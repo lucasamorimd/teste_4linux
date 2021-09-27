@@ -4,6 +4,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      container_name: angular-server
     ports:
       - "4200:4200"
     volumes:
